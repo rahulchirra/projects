@@ -1,0 +1,1258 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Elite Boxing Training Program</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;900&display=swap');
+        
+        body {
+            font-family: 'Poppins', sans-serif;
+            scroll-behavior: smooth;
+        }
+        
+        .hero-video {
+            position: relative;
+            height: 100vh;
+            overflow: hidden;
+        }
+        
+        .hero-video video {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            min-width: 100%;
+            min-height: 100%;
+            z-index: -1;
+        }
+        
+        .training-phase-card {
+            transition: all 0.3s ease;
+            transform: translateY(0);
+        }
+        
+        .training-phase-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
+        
+        .exercise-card {
+            transition: all 0.3s ease;
+        }
+        
+        .exercise-card:hover {
+            transform: scale(1.03);
+        }
+        
+        .countdown-number {
+            font-size: 3rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, #f59e0b, #ef4444);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+        
+        .pulse-animation {
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+        
+        .floating {
+            animation: floating 3s ease-in-out infinite;
+        }
+        
+        @keyframes floating {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-15px); }
+            100% { transform: translateY(0px); }
+        }
+
+        .phase-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        
+        .phase-table th {
+            background-color: #1f2937;
+            color: #f3f4f6;
+            padding: 12px;
+            text-align: left;
+            font-weight: 600;
+            text-transform: uppercase;
+            font-size: 0.75rem;
+            letter-spacing: 0.05em;
+        }
+        
+        .phase-table td {
+            padding: 12px;
+            border-bottom: 1px solid #374151;
+            color: #d1d5db;
+            vertical-align: top;
+        }
+        
+        .phase-table tr:last-child td {
+            border-bottom: none;
+        }
+        
+        .phase-table tr:hover td {
+            background-color: #1f2937;
+        }
+        
+        .phase-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid;
+        }
+        
+        .phase-number {
+            width: 3rem;
+            height: 3rem;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 1rem;
+            font-weight: bold;
+            color: white;
+        }
+        
+        .beginner-phase {
+            border-color: #ef4444;
+        }
+        
+        .intermediate-phase {
+            border-color: #f59e0b;
+        }
+        
+        .advanced-phase {
+            border-color: #10b981;
+        }
+        
+        .beginner-bg {
+            background-color: #ef4444;
+        }
+        
+        .intermediate-bg {
+            background-color: #f59e0b;
+        }
+        
+        .advanced-bg {
+            background-color: #10b981;
+        }
+        
+        .exercise-icon {
+            width: 2.5rem;
+            height: 2.5rem;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 1rem;
+            color: white;
+        }
+        
+        .animate-fadeIn {
+            animation: fadeIn 0.5s ease-in forwards;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body class="bg-gray-900 text-white">
+    <!-- Navigation -->
+    <nav class="fixed w-full z-50 bg-gray-900 bg-opacity-90 backdrop-filter backdrop-blur-sm">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16 items-center">
+                <div class="flex items-center">
+                    <div class="flex-shrink-0 flex items-center">
+                        <i class="fas fa-boxing-glove text-red-500 text-2xl mr-2"></i>
+                        <span class="text-xl font-bold bg-gradient-to-r from-red-500 to-yellow-500 bg-clip-text text-transparent">ELITE BOXING</span>
+                    </div>
+                </div>
+                <div class="hidden md:block">
+                    <div class="ml-10 flex items-baseline space-x-4">
+                        <a href="#home" class="px-3 py-2 rounded-md text-sm font-medium hover:text-red-400 transition">Home</a>
+                        <a href="#program" class="px-3 py-2 rounded-md text-sm font-medium hover:text-red-400 transition">Program</a>
+                        <a href="#phases" class="px-3 py-2 rounded-md text-sm font-medium hover:text-red-400 transition">Phases</a>
+                        <a href="#testimonials" class="px-3 py-2 rounded-md text-sm font-medium hover:text-red-400 transition">Testimonials</a>
+                        <a href="#contact" class="px-3 py-2 rounded-md text-sm font-medium hover:text-red-400 transition">Contact</a>
+                    </div>
+                </div>
+                <div class="md:hidden">
+                    <button id="mobile-menu-button" class="text-gray-300 hover:text-white focus:outline-none">
+                        <i class="fas fa-bars text-xl"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Mobile menu -->
+        <div id="mobile-menu" class="hidden md:hidden bg-gray-800">
+            <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
+                <a href="#home" class="block px-3 py-2 rounded-md text-base font-medium hover:text-red-400 transition">Home</a>
+                <a href="#program" class="block px-3 py-2 rounded-md text-base font-medium hover:text-red-400 transition">Program</a>
+                <a href="#phases" class="block px-3 py-2 rounded-md text-base font-medium hover:text-red-400 transition">Phases</a>
+                <a href="#testimonials" class="block px-3 py-2 rounded-md text-base font-medium hover:text-red-400 transition">Testimonials</a>
+                <a href="#contact" class="block px-3 py-2 rounded-md text-base font-medium hover:text-red-400 transition">Contact</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero-video">
+        <video autoplay muted loop class="w-full h-full object-cover">
+            <source src="https://assets.mixkit.co/videos/preview/mixkit-boxer-training-with-a-punching-bag-1231-large.mp4" type="video/mp4">
+        </video>
+        <div class="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center">
+            <div class="text-center px-4">
+                <h1 class="text-4xl md:text-6xl font-bold mb-6 bg-gradient-to-r from-red-500 to-yellow-500 bg-clip-text text-transparent">
+                    TRANSFORM YOUR BOXING SKILLS
+                </h1>
+                <p class="text-xl md:text-2xl mb-8 max-w-3xl mx-auto">
+                    24-Week Proven Training Program to Take You From Beginner to Tournament Ready
+                </p>
+                <div class="flex flex-col sm:flex-row justify-center gap-4">
+                    <a href="#program" class="px-8 py-3 bg-gradient-to-r from-red-600 to-yellow-500 rounded-full font-bold hover:opacity-90 transition transform hover:scale-105 pulse-animation">
+                        EXPLORE PROGRAM
+                    </a>
+                    <a href="#contact" class="px-8 py-3 border-2 border-red-500 rounded-full font-bold hover:bg-red-500 transition transform hover:scale-105">
+                        GET STARTED
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Stats Section -->
+    <section class="py-16 bg-gray-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8 text-center">
+                <div class="p-6 rounded-lg bg-gray-700">
+                    <div class="countdown-number mb-2">24</div>
+                    <p class="text-gray-300">Weeks of Training</p>
+                </div>
+                <div class="p-6 rounded-lg bg-gray-700">
+                    <div class="countdown-number mb-2">3</div>
+                    <p class="text-gray-300">Progressive Phases</p>
+                </div>
+                <div class="p-6 rounded-lg bg-gray-700">
+                    <div class="countdown-number mb-2">100+</div>
+                    <p class="text-gray-300">Exercises</p>
+                </div>
+                <div class="p-6 rounded-lg bg-gray-700">
+                    <div class="countdown-number mb-2">5</div>
+                    <p class="text-gray-300">Training Days/Week</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Program Overview -->
+    <section id="program" class="py-20 bg-gray-900">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-4xl font-bold mb-4 bg-gradient-to-r from-red-500 to-yellow-500 bg-clip-text text-transparent">
+                    PROGRAM OVERVIEW
+                </h2>
+                <p class="max-w-3xl mx-auto text-lg text-gray-300">
+                    Our scientifically designed 24-week program systematically builds your boxing skills, conditioning, and fight IQ through three progressive phases.
+                </p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="training-phase-card bg-gray-800 rounded-xl overflow-hidden shadow-lg">
+                    <div class="h-48 bg-red-600 flex items-center justify-center">
+                        <i class="fas fa-user-graduate text-white text-6xl"></i>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-2xl font-bold mb-3 text-red-400">Beginner Phase</h3>
+                        <p class="text-gray-300 mb-4">Weeks 1-8: Build fundamentals, stamina, and discipline with 4-5 training days per week.</p>
+                        <ul class="space-y-2 text-gray-300">
+                            <li class="flex items-start">
+                                <i class="fas fa-check text-red-400 mt-1 mr-2"></i>
+                                <span>Focus on proper form and technique</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fas fa-check text-red-400 mt-1 mr-2"></i>
+                                <span>Basic footwork and punch combinations</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fas fa-check text-red-400 mt-1 mr-2"></i>
+                                <span>Conditioning foundation</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="training-phase-card bg-gray-800 rounded-xl overflow-hidden shadow-lg">
+                    <div class="h-48 bg-yellow-600 flex items-center justify-center">
+                        <i class="fas fa-user-shield text-white text-6xl"></i>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-2xl font-bold mb-3 text-yellow-400">Intermediate Phase</h3>
+                        <p class="text-gray-300 mb-4">Weeks 9-16: Develop power, sparring skills, and complex combinations with 5-6 training days.</p>
+                        <ul class="space-y-2 text-gray-300">
+                            <li class="flex items-start">
+                                <i class="fas fa-check text-yellow-400 mt-1 mr-2"></i>
+                                <span>Introduction to sparring</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fas fa-check text-yellow-400 mt-1 mr-2"></i>
+                                <span>Advanced combinations and counters</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fas fa-check text-yellow-400 mt-1 mr-2"></i>
+                                <span>Increased power and speed training</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="training-phase-card bg-gray-800 rounded-xl overflow-hidden shadow-lg">
+                    <div class="h-48 bg-green-600 flex items-center justify-center">
+                        <i class="fas fa-trophy text-white text-6xl"></i>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-2xl font-bold mb-3 text-green-400">Advanced Phase</h3>
+                        <p class="text-gray-300 mb-4">Weeks 17-24: Tournament preparation and elite conditioning with 6 training days per week.</p>
+                        <ul class="space-y-2 text-gray-300">
+                            <li class="flex items-start">
+                                <i class="fas fa-check text-green-400 mt-1 mr-2"></i>
+                                <span>Fight simulation training</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fas fa-check text-green-400 mt-1 mr-2"></i>
+                                <span>Competition strategy development</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fas fa-check text-green-400 mt-1 mr-2"></i>
+                                <span>Peak physical conditioning</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Detailed Phases Section -->
+    <section id="phases" class="py-20 bg-gray-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-4xl font-bold mb-4 bg-gradient-to-r from-red-500 to-yellow-500 bg-clip-text text-transparent">
+                    COMPLETE TRAINING PROGRAM
+                </h2>
+                <p class="max-w-3xl mx-auto text-lg text-gray-300">
+                    Detailed weekly breakdown of all exercises, sets, reps, and rest periods for each phase.
+                </p>
+            </div>
+            
+            <!-- Beginner Phase Complete Workouts -->
+            <div class="mb-20 bg-gray-700 rounded-xl p-8 shadow-lg">
+                <div class="phase-header beginner-phase">
+                    <div class="phase-number beginner-bg">1</div>
+                    <h3 class="text-2xl md:text-3xl font-bold text-red-400">Beginner Phase (Weeks 1-8)</h3>
+                </div>
+                
+                <p class="text-gray-300 mb-6">Focus: Build fundamentals, stamina, and discipline. Training Days: 4-5 days/week.</p>
+                
+                <!-- Monday Workout -->
+                <div class="mb-8">
+                    <div class="flex items-center mb-4">
+                        <div class="exercise-icon bg-red-500">
+                            <i class="fas fa-calendar-day"></i>
+                        </div>
+                        <h4 class="text-xl font-bold">Monday Workout</h4>
+                    </div>
+                    
+                    <div class="overflow-x-auto">
+                        <table class="phase-table">
+                            <thead>
+                                <tr>
+                                    <th>Exercise</th>
+                                    <th>Sets/Reps/Duration</th>
+                                    <th>Rest Between Sets</th>
+                                    <th>Notes</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Warm-Up</td>
+                                    <td>10-min jump rope</td>
+                                    <td>-</td>
+                                    <td>Light pace, focus on rhythm</td>
+                                </tr>
+                                <tr>
+                                    <td>Footwork Drills</td>
+                                    <td>3 sets x 2 mins</td>
+                                    <td>60 sec</td>
+                                    <td>Practice advancing, retreating, pivoting</td>
+                                </tr>
+                                <tr>
+                                    <td>Jab-Cross (1-2)</td>
+                                    <td>3 sets x 30 reps (on mirror)</td>
+                                    <td>45 sec</td>
+                                    <td>Focus on form, shoulder rotation</td>
+                                </tr>
+                                <tr>
+                                    <td>Heavy Bag</td>
+                                    <td>3 rounds x 2 mins</td>
+                                    <td>60 sec</td>
+                                    <td>Light power, 1-2 combos only</td>
+                                </tr>
+                                <tr>
+                                    <td>Push-Ups</td>
+                                    <td>3 sets x 15 reps</td>
+                                    <td>60 sec</td>
+                                    <td>Full range of motion</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                
+                <!-- Wednesday Workout -->
+                <div class="mb-8">
+                    <div class="flex items-center mb-4">
+                        <div class="exercise-icon bg-red-500">
+                            <i class="fas fa-calendar-day"></i>
+                        </div>
+                        <h4 class="text-xl font-bold">Wednesday Workout</h4>
+                    </div>
+                    
+                    <div class="overflow-x-auto">
+                        <table class="phase-table">
+                            <thead>
+                                <tr>
+                                    <th>Exercise</th>
+                                    <th>Sets/Reps/Duration</th>
+                                    <th>Rest Between Sets</th>
+                                    <th>Notes</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Warm-Up</td>
+                                    <td>10-min dynamic stretching</td>
+                                    <td>-</td>
+                                    <td>Arm circles, leg swings, torso twists</td>
+                                </tr>
+                                <tr>
+                                    <td>Hook/Uppercut Practice</td>
+                                    <td>3 sets x 20 reps (each arm)</td>
+                                    <td>45 sec</td>
+                                    <td>Use focus mitts or heavy bag; rotate hips</td>
+                                </tr>
+                                <tr>
+                                    <td>Defense Drills</td>
+                                    <td>3 sets x 2 mins</td>
+                                    <td>60 sec</td>
+                                    <td>Slips, blocks, and bobs (use a partner or rope)</td>
+                                </tr>
+                                <tr>
+                                    <td>Burpees</td>
+                                    <td>3 sets x 10 reps</td>
+                                    <td>60 sec</td>
+                                    <td>Explosive jumps</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                
+                <!-- Friday Workout -->
+                <div class="mb-8">
+                    <div class="flex items-center mb-4">
+                        <div class="exercise-icon bg-red-500">
+                            <i class="fas fa-calendar-day"></i>
+                        </div>
+                        <h4 class="text-xl font-bold">Friday Workout</h4>
+                    </div>
+                    
+                    <div class="overflow-x-auto">
+                        <table class="phase-table">
+                            <thead>
+                                <tr>
+                                    <th>Exercise</th>
+                                    <th>Sets/Reps/Duration</th>
+                                    <th>Rest Between Sets</th>
+                                    <th>Notes</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Warm-Up</td>
+                                    <td>10-min shadowboxing</td>
+                                    <td>-</td>
+                                    <td>Practice stance and basic punches</td>
+                                </tr>
+                                <tr>
+                                    <td>Combination Drills</td>
+                                    <td>1-2-3 (jab-cross-hook) x 30</td>
+                                    <td>60 sec</td>
+                                    <td>3 sets on heavy bag</td>
+                                </tr>
+                                <tr>
+                                    <td>Bodyweight Circuit</td>
+                                    <td>3 rounds:</td>
+                                    <td>60 sec</td>
+                                    <td>15 push-ups, 20 squats, 1-min plank</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                
+                <!-- Saturday Workout -->
+                <div>
+                    <div class="flex items-center mb-4">
+                        <div class="exercise-icon bg-red-500">
+                            <i class="fas fa-calendar-day"></i>
+                        </div>
+                        <h4 class="text-xl font-bold">Saturday Workout</h4>
+                    </div>
+                    
+                    <div class="overflow-x-auto">
+                        <table class="phase-table">
+                            <thead>
+                                <tr>
+                                    <th>Exercise</th>
+                                    <th>Sets/Reps/Duration</th>
+                                    <th>Rest Between Sets</th>
+                                    <th>Notes</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Endurance</td>
+                                    <td>30-min brisk walk/jog</td>
+                                    <td>-</td>
+                                    <td>Low intensity; focus on breathing</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Intermediate Phase Complete Workouts -->
+            <div class="mb-20 bg-gray-700 rounded-xl p-8 shadow-lg">
+                <div class="phase-header intermediate-phase">
+                    <div class="phase-number intermediate-bg">2</div>
+                    <h3 class="text-2xl md:text-3xl font-bold text-yellow-400">Intermediate Phase (Weeks 9-16)</h3>
+                </div>
+                
+                <p class="text-gray-300 mb-6">Focus: Power, sparring, and complex combinations. Training Days: 5-6 days/week.</p>
+                
+                <!-- Monday Workout -->
+                <div class="mb-8">
+                    <div class="flex items-center mb-4">
+                        <div class="exercise-icon bg-yellow-500">
+                            <i class="fas fa-calendar-day"></i>
+                        </div>
+                        <h4 class="text-xl font-bold">Monday Workout</h4>
+                    </div>
+                    
+                    <div class="overflow-x-auto">
+                        <table class="phase-table">
+                            <thead>
+                                <tr>
+                                    <th>Exercise</th>
+                                    <th>Sets/Reps/Duration</th>
+                                    <th>Rest Between Sets</th>
+                                    <th>Notes</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Warm-Up</td>
+                                    <td>15-min jump rope</td>
+                                    <td>-</td>
+                                    <td>Add footwork variations (crisscross, double-unders)</td>
+                                </tr>
+                                <tr>
+                                    <td>Partner Defense Drills</td>
+                                    <td>3 rounds x 3 mins</td>
+                                    <td>60 sec</td>
+                                    <td>Block, parry, and counter 1-2 combos</td>
+                                </tr>
+                                <tr>
+                                    <td>Light Sparring</td>
+                                    <td>4 rounds x 2 mins</td>
+                                    <td>90 sec</td>
+                                    <td>30% power; focus on technique</td>
+                                </tr>
+                                <tr>
+                                    <td>Plyometric Push-Ups</td>
+                                    <td>3 sets x 12 reps</td>
+                                    <td>60 sec</td>
+                                    <td>Explode upward on each rep</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                
+                <!-- Wednesday Workout -->
+                <div class="mb-8">
+                    <div class="flex items-center mb-4">
+                        <div class="exercise-icon bg-yellow-500">
+                            <i class="fas fa-calendar-day"></i>
+                        </div>
+                        <h4 class="text-xl font-bold">Wednesday Workout</h4>
+                    </div>
+                    
+                    <div class="overflow-x-auto">
+                        <table class="phase-table">
+                            <thead>
+                                <tr>
+                                    <th>Exercise</th>
+                                    <th>Sets/Reps/Duration</th>
+                                    <th>Rest Between Sets</th>
+                                    <th>Notes</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Warm-Up</td>
+                                    <td>10-min shadowboxing w/ 1 lb</td>
+                                    <td>-</td>
+                                    <td>Mimic punches with light dumbbells</td>
+                                </tr>
+                                <tr>
+                                    <td>Mitt Work</td>
+                                    <td>3 rounds x 3 mins</td>
+                                    <td>60 sec</td>
+                                    <td>Complex combos (e.g., 1-2-slip-3-roll)</td>
+                                </tr>
+                                <tr>
+                                    <td>Heavy Bag (Power Shots)</td>
+                                    <td>5 rounds x 2 mins</td>
+                                    <td>60 sec</td>
+                                    <td>20-sec max effort bursts per round</td>
+                                </tr>
+                                <tr>
+                                    <td>Kettlebell Swings</td>
+                                    <td>4 sets x 20 reps</td>
+                                    <td>45 sec</td>
+                                    <td>Use 15-25 lbs; hinge at hips</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                
+                <!-- Friday Workout -->
+                <div>
+                    <div class="flex items-center mb-4">
+                        <div class="exercise-icon bg-yellow-500">
+                            <i class="fas fa-calendar-day"></i>
+                        </div>
+                        <h4 class="text-xl font-bold">Friday Workout</h4>
+                    </div>
+                    
+                    <div class="overflow-x-auto">
+                        <table class="phase-table">
+                            <thead>
+                                <tr>
+                                    <th>Exercise</th>
+                                    <th>Sets/Reps/Duration</th>
+                                    <th>Rest Between Sets</th>
+                                    <th>Notes</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Speed Bag</td>
+                                    <td>5 rounds x 2 mins</td>
+                                    <td>30 sec</td>
+                                    <td>Maintain rhythm; alternate hands</td>
+                                </tr>
+                                <tr>
+                                    <td>Sprints</td>
+                                    <td>10 x 100m</td>
+                                    <td>60 sec</td>
+                                    <td>All-out effort</td>
+                                </tr>
+                                <tr>
+                                    <td>Core Circuit</td>
+                                    <td>3 rounds:</td>
+                                    <td>60 sec</td>
+                                    <td>20 Russian twists, 15 leg raises, 1-min side plank (each side)</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Advanced Phase Complete Workouts -->
+            <div class="bg-gray-700 rounded-xl p-8 shadow-lg">
+                <div class="phase-header advanced-phase">
+                    <div class="phase-number advanced-bg">3</div>
+                    <h3 class="text-2xl md:text-3xl font-bold text-green-400">Advanced Phase (Weeks 17-24)</h3>
+                </div>
+                
+                <p class="text-gray-300 mb-6">Focus: Tournament prep, fight simulation, and elite conditioning. Training Days: 6 days/week.</p>
+                
+                <!-- Monday Workout -->
+                <div class="mb-8">
+                    <div class="flex items-center mb-4">
+                        <div class="exercise-icon bg-green-500">
+                            <i class="fas fa-calendar-day"></i>
+                        </div>
+                        <h4 class="text-xl font-bold">Monday Workout</h4>
+                    </div>
+                    
+                    <div class="overflow-x-auto">
+                        <table class="phase-table">
+                            <thead>
+                                <tr>
+                                    <th>Exercise</th>
+                                    <th>Sets/Reps/Duration</th>
+                                    <th>Rest Between Sets</th>
+                                    <th>Notes</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Warm-Up</td>
+                                    <td>15-min jump rope + stretches</td>
+                                    <td>-</td>
+                                    <td>High intensity</td>
+                                </tr>
+                                <tr>
+                                    <td>Sparring</td>
+                                    <td>6 rounds x 3 mins</td>
+                                    <td>60 sec</td>
+                                    <td>70-80% power; simulate tournament rules</td>
+                                </tr>
+                                <tr>
+                                    <td>Counter-Punch Mitts</td>
+                                    <td>3 rounds x 3 mins</td>
+                                    <td>60 sec</td>
+                                    <td>Slip → cross → hook combos</td>
+                                </tr>
+                                <tr>
+                                    <td>Pull-Ups</td>
+                                    <td>4 sets x 10 reps</td>
+                                    <td>60 sec</td>
+                                    <td>Full extension at bottom</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                
+                <!-- Wednesday Workout -->
+                <div class="mb-8">
+                    <div class="flex items-center mb-4">
+                        <div class="exercise-icon bg-green-500">
+                            <i class="fas fa-calendar-day"></i>
+                        </div>
+                        <h4 class="text-xl font-bold">Wednesday Workout</h4>
+                    </div>
+                    
+                    <div class="overflow-x-auto">
+                        <table class="phase-table">
+                            <thead>
+                                <tr>
+                                    <th>Exercise</th>
+                                    <th>Sets/Reps/Duration</th>
+                                    <th>Rest Between Sets</th>
+                                    <th>Notes</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Double-End Bag</td>
+                                    <td>5 rounds x 3 mins</td>
+                                    <td>30 sec</td>
+                                    <td>Focus on timing and precision</td>
+                                </tr>
+                                <tr>
+                                    <td>Interval Training</td>
+                                    <td>30 sec sprint / 30 sec jog</td>
+                                    <td>-</td>
+                                    <td>Repeat 15x</td>
+                                </tr>
+                                <tr>
+                                    <td>Medicine Ball Slams</td>
+                                    <td>4 sets x 25 reps</td>
+                                    <td>45 sec</td>
+                                    <td>Use 10-20 lb ball; full overhead throw</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                
+                <!-- Friday Workout -->
+                <div class="mb-8">
+                    <div class="flex items-center mb-4">
+                        <div class="exercise-icon bg-green-500">
+                            <i class="fas fa-calendar-day"></i>
+                        </div>
+                        <h4 class="text-xl font-bold">Friday Workout</h4>
+                    </div>
+                    
+                    <div class="overflow-x-auto">
+                        <table class="phase-table">
+                            <thead>
+                                <tr>
+                                    <th>Exercise</th>
+                                    <th>Sets/Reps/Duration</th>
+                                    <th>Rest Between Sets</th>
+                                    <th>Notes</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Endurance Circuit</td>
+                                    <td>3 rounds:</td>
+                                    <td>120 sec</td>
+                                    <td>3-min heavy bag, 1-min burpees, 1-min battle ropes (no rest between)</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                
+                <!-- Saturday Workout -->
+                <div>
+                    <div class="flex items-center mb-4">
+                        <div class="exercise-icon bg-green-500">
+                            <i class="fas fa-calendar-day"></i>
+                        </div>
+                        <h4 class="text-xl font-bold">Saturday Workout</h4>
+                    </div>
+                    
+                    <div class="overflow-x-auto">
+                        <table class="phase-table">
+                            <thead>
+                                <tr>
+                                    <th>Exercise</th>
+                                    <th>Sets/Reps/Duration</th>
+                                    <th>Rest Between Sets</th>
+                                    <th>Notes</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Mental Training</td>
+                                    <td>10-min visualization</td>
+                                    <td>-</td>
+                                    <td>Imagine executing perfect combos and winning rounds</td>
+                                </tr>
+                                <tr>
+                                    <td>Strategy Session</td>
+                                    <td>Study opponent footage</td>
+                                    <td>-</td>
+                                    <td>Identify weaknesses and plan counters</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Video Demonstration Section -->
+    <section class="py-20 bg-gray-900">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-4xl font-bold mb-4 bg-gradient-to-r from-red-500 to-yellow-500 bg-clip-text text-transparent">
+                    TRAINING DEMONSTRATIONS
+                </h2>
+                <p class="max-w-3xl mx-auto text-lg text-gray-300">
+                    Watch professional demonstrations of key exercises from each phase.
+                </p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="bg-gray-800 rounded-xl overflow-hidden shadow-lg">
+                    <div class="relative pt-[56.25%]">
+                        <iframe class="absolute top-0 left-0 w-full h-full" src="https://www.youtube.com/embed/dQw4w9WgXcQ" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold mb-2">Beginner Footwork Drills</h3>
+                        <p class="text-gray-400">Master the basic footwork patterns that form the foundation of boxing movement.</p>
+                    </div>
+                </div>
+                
+                <div class="bg-gray-800 rounded-xl overflow-hidden shadow-lg">
+                    <div class="relative pt-[56.25%]">
+                        <iframe class="absolute top-0 left-0 w-full h-full" src="https://www.youtube.com/embed/dQw4w9WgXcQ" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold mb-2">Intermediate Combination Training</h3>
+                        <p class="text-gray-400">Learn fluid punch combinations with proper defensive maneuvers.</p>
+                    </div>
+                </div>
+                
+                <div class="bg-gray-800 rounded-xl overflow-hidden shadow-lg">
+                    <div class="relative pt-[56.25%]">
+                        <iframe class="absolute top-0 left-0 w-full h-full" src="https://www.youtube.com/embed/dQw4w9WgXcQ" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold mb-2">Advanced Sparring Strategies</h3>
+                        <p class="text-gray-400">Tournament-level sparring techniques and mental preparation.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials -->
+    <section id="testimonials" class="py-20 bg-gray-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-4xl font-bold mb-4 bg-gradient-to-r from-red-500 to-yellow-500 bg-clip-text text-transparent">
+                    ATHLETE TESTIMONIALS
+                </h2>
+                <p class="max-w-3xl mx-auto text-lg text-gray-300">
+                    Hear from boxers who transformed their skills with this program.
+                </p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="bg-gray-700 rounded-xl p-8 shadow-lg">
+                    <div class="flex items-center mb-6">
+                        <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="Testimonial" class="w-16 h-16 rounded-full object-cover mr-4 border-2 border-red-500">
+                        <div>
+                            <h4 class="font-bold">Mike T.</h4>
+                            <p class="text-yellow-400 text-sm">Golden Gloves Champion</p>
+                        </div>
+                    </div>
+                    <p class="text-gray-300 italic mb-4">"This program took me from amateur to champion in 6 months. The phased approach built my skills systematically."</p>
+                    <div class="flex text-yellow-400">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                    </div>
+                </div>
+                
+                <div class="bg-gray-700 rounded-xl p-8 shadow-lg">
+                    <div class="flex items-center mb-6">
+                        <img src="https://randomuser.me/api/portraits/women/44.jpg" alt="Testimonial" class="w-16 h-16 rounded-full object-cover mr-4 border-2 border-red-500">
+                        <div>
+                            <h4 class="font-bold">Sarah J.</h4>
+                            <p class="text-yellow-400 text-sm">National Tournament Finalist</p>
+                        </div>
+                    </div>
+                    <p class="text-gray-300 italic mb-4">"The detailed workout tables and progression plan eliminated all guesswork. I improved faster than ever before."</p>
+                    <div class="flex text-yellow-400">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                    </div>
+                </div>
+                
+                <div class="bg-gray-700 rounded-xl p-8 shadow-lg">
+                    <div class="flex items-center mb-6">
+                        <img src="https://randomuser.me/api/portraits/men/75.jpg" alt="Testimonial" class="w-16 h-16 rounded-full object-cover mr-4 border-2 border-red-500">
+                        <div>
+                            <h4 class="font-bold">David R.</h4>
+                            <p class="text-yellow-400 text-sm">Boxing Coach</p>
+                        </div>
+                    </div>
+                    <p class="text-gray-300 italic mb-4">"I use this program with all my competitive fighters. The structure produces consistent results across skill levels."</p>
+                    <div class="flex text-yellow-400">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="py-20 bg-gradient-to-br from-gray-900 to-gray-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <h2 class="text-3xl md:text-4xl font-bold mb-6 bg-gradient-to-r from-red-500 to-yellow-500 bg-clip-text text-transparent">
+                READY TO TRANSFORM YOUR BOXING?
+            </h2>
+            <p class="text-xl mb-8 max-w-3xl mx-auto text-gray-300">
+                Join hundreds of fighters who've elevated their game with our proven 24-week program.
+            </p>
+            <div class="flex flex-col sm:flex-row justify-center gap-4">
+                <a href="#contact" class="px-8 py-4 bg-gradient-to-r from-red-600 to-yellow-500 rounded-full font-bold hover:opacity-90 transition transform hover:scale-105 text-lg">
+                    START YOUR JOURNEY TODAY
+                </a>
+                <a href="#program" class="px-8 py-4 border-2 border-red-500 rounded-full font-bold hover:bg-red-500 transition transform hover:scale-105 text-lg">
+                    LEARN MORE
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Form -->
+    <section id="contact" class="py-20 bg-gray-900">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+                <div>
+                    <h2 class="text-3xl md:text-4xl font-bold mb-6 bg-gradient-to-r from-red-500 to-yellow-500 bg-clip-text text-transparent">
+                        GET IN TOUCH
+                    </h2>
+                    <p class="text-lg text-gray-300 mb-8">
+                        Have questions about the program? Want personalized advice? Contact our coaching team directly.
+                    </p>
+                    <div class="space-y-6">
+                        <div class="flex items-start">
+                            <div class="flex-shrink-0 h-10 w-10 rounded-full bg-red-600 flex items-center justify-center mr-4 mt-1">
+                                <i class="fas fa-envelope text-white"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-lg">Email Us</h4>
+                                <p class="text-gray-400">coaching@eliteboxing.com</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start">
+                            <div class="flex-shrink-0 h-10 w-10 rounded-full bg-yellow-600 flex items-center justify-center mr-4 mt-1">
+                                <i class="fas fa-phone-alt text-white"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-lg">Call Us</h4>
+                                <p class="text-gray-400">(555) 123-4567</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start">
+                            <div class="flex-shrink-0 h-10 w-10 rounded-full bg-green-600 flex items-center justify-center mr-4 mt-1">
+                                <i class="fas fa-map-marker-alt text-white"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-lg">Visit Us</h4>
+                                <p class="text-gray-400">123 Boxing Lane, Champion City</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="bg-gray-800 rounded-xl p-8 shadow-xl">
+                    <form id="contactForm" class="space-y-6">
+                        <div>
+                            <label for="name" class="block text-sm font-medium text-gray-300 mb-1">Full Name</label>
+                            <input type="text" id="name" name="name" required class="w-full px-4 py-3 bg-gray-700 border border-gray-600 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-transparent text-white placeholder-gray-400">
+                        </div>
+                        <div>
+                            <label for="email" class="block text-sm font-medium text-gray-300 mb-1">Email Address</label>
+                            <input type="email" id="email" name="email" required class="w-full px-4 py-3 bg-gray-700 border border-gray-600 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-transparent text-white placeholder-gray-400">
+                        </div>
+                        <div>
+                            <label for="experience" class="block text-sm font-medium text-gray-300 mb-1">Current Boxing Experience</label>
+                            <select id="experience" name="experience" class="w-full px-4 py-3 bg-gray-700 border border-gray-600 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-transparent text-white">
+                                <option value="beginner">Beginner (0-6 months)</option>
+                                <option value="intermediate">Intermediate (6 months-2 years)</option>
+                                <option value="advanced">Advanced (2+ years)</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label for="message" class="block text-sm font-medium text-gray-300 mb-1">Your Message</label>
+                            <textarea id="message" name="message" rows="4" class="w-full px-4 py-3 bg-gray-700 border border-gray-600 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-transparent text-white placeholder-gray-400"></textarea>
+                        </div>
+                        <button type="submit" class="w-full px-6 py-4 bg-gradient-to-r from-red-600 to-yellow-500 rounded-lg font-bold hover:opacity-90 transition transform hover:scale-[1.02]">
+                            SEND MESSAGE
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 py-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <div>
+                    <div class="flex items-center mb-4">
+                        <i class="fas fa-boxing-glove text-red-500 text-2xl mr-2"></i>
+                        <span class="text-xl font-bold bg-gradient-to-r from-red-500 to-yellow-500 bg-clip-text text-transparent">ELITE BOXING</span>
+                    </div>
+                    <p class="text-gray-400">
+                        The premier boxing training program for fighters at all levels.
+                    </p>
+                    <div class="flex space-x-4 mt-6">
+                        <a href="#" class="text-gray-400 hover:text-red-500 transition">
+                            <i class="fab fa-facebook-f"></i>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-red-500 transition">
+                            <i class="fab fa-twitter"></i>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-red-500 transition">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-red-500 transition">
+                            <i class="fab fa-youtube"></i>
+                        </a>
+                    </div>
+                </div>
+                
+                <div>
+                    <h4 class="text-lg font-bold mb-4 text-white">Quick Links</h4>
+                    <ul class="space-y-2">
+                        <li><a href="#home" class="text-gray-400 hover:text-red-400 transition">Home</a></li>
+                        <li><a href="#program" class="text-gray-400 hover:text-red-400 transition">Program</a></li>
+                        <li><a href="#phases" class="text-gray-400 hover:text-red-400 transition">Training Phases</a></li>
+                        <li><a href="#testimonials" class="text-gray-400 hover:text-red-400 transition">Testimonials</a></li>
+                        <li><a href="#contact" class="text-gray-400 hover:text-red-400 transition">Contact</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h4 class="text-lg font-bold mb-4 text-white">Resources</h4>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="text-gray-400 hover:text-red-400 transition">Training Videos</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-red-400 transition">Nutrition Guide</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-red-400 transition">Recovery Tips</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-red-400 transition">Sparring Strategies</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-red-400 transition">Tournament Prep</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h4 class="text-lg font-bold mb-4 text-white">Newsletter</h4>
+                    <p class="text-gray-400 mb-4">
+                        Subscribe for training tips and exclusive content.
+                    </p>
+                    <form class="flex">
+                        <input type="email" placeholder="Your email" class="px-4 py-2 bg-gray-700 text-white rounded-l-lg focus:outline-none focus:ring-2 focus:ring-red-500 w-full">
+                        <button type="submit" class="px-4 py-2 bg-red-600 text-white rounded-r-lg hover:bg-red-700 transition">
+                            <i class="fas fa-paper-plane"></i>
+                        </button>
+                    </form>
+                </div>
+            </div>
+            
+            <div class="border-t border-gray-700 mt-12 pt-8 flex flex-col md:flex-row justify-between items-center">
+                <p class="text-gray-400">
+                    &copy; 2023 Elite Boxing. All rights reserved.
+                </p>
+                <div class="flex space-x-6 mt-4 md:mt-0">
+                    <a href="#" class="text-gray-400 hover:text-red-400 transition">Privacy Policy</a>
+                    <a href="#" class="text-gray-400 hover:text-red-400 transition">Terms of Service</a>
+                    <a href="#" class="text-gray-400 hover:text-red-400 transition">FAQ</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Back to Top Button -->
+    <button id="backToTop" class="fixed bottom-8 right-8 bg-red-600 text-white p-3 rounded-full shadow-lg opacity-0 invisible transition-all duration-300 hover:bg-red-700">
+        <i class="fas fa-arrow-up"></i>
+    </button>
+
+    <script>
+        // Mobile menu toggle
+        const mobileMenuButton = document.getElementById('mobile-menu-button');
+        const mobileMenu = document.getElementById('mobile-menu');
+        
+        mobileMenuButton.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+        
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                const targetElement = document.querySelector(targetId);
+                
+                if (targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                    
+                    // Close mobile menu if open
+                    if (!mobileMenu.classList.contains('hidden')) {
+                        mobileMenu.classList.add('hidden');
+                    }
+                }
+            });
+        });
+        
+        // Back to top button
+        const backToTopButton = document.getElementById('backToTop');
+        
+        window.addEventListener('scroll', () => {
+            if (window.pageYOffset > 300) {
+                backToTopButton.classList.remove('opacity-0', 'invisible');
+                backToTopButton.classList.add('opacity-100', 'visible');
+            } else {
+                backToTopButton.classList.remove('opacity-100', 'visible');
+                backToTopButton.classList.add('opacity-0', 'invisible');
+            }
+        });
+        
+        backToTopButton.addEventListener('click', () => {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        });
+        
+        // Form submission
+        const contactForm = document.getElementById('contactForm');
+        
+        contactForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            
+            // Get form values
+            const name = document.getElementById('name').value;
+            const email = document.getElementById('email').value;
+            const experience = document.getElementById('experience').value;
+            const message = document.getElementById('message').value;
+            
+            // Here you would typically send this data to a server
+            console.log({ name, email, experience, message });
+            
+            // Show success message
+            alert('Thank you for your message! We will get back to you soon.');
+            
+            // Reset form
+            contactForm.reset();
+        });
+        
+        // Animate elements when they come into view
+        const observerOptions = {
+            threshold: 0.1
+        };
+        
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('animate-fadeIn');
+                }
+            });
+        }, observerOptions);
+        
+        document.querySelectorAll('.training-phase-card, .exercise-card').forEach(card => {
+            observer.observe(card);
+        });
+    </script>
+</body>
+</html>
